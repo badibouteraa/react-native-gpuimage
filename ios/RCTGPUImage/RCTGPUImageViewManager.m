@@ -8,12 +8,12 @@
 
 #import "RCTGPUImageViewManager.h"
 #import "RCTGPUImageView.h"
-#import "RCTConvert.h"
-#import "RCTImageLoader.h"
-#import "RCTLog.h"
-#import "RCTUtils.h"
-#import "RCTUIManager.h"
-#import "RCTImageStoreManager.h"
+#import <React/RCTConvert.h>
+#import <React/RCTImageLoader.h>
+#import <React/RCTLog.h>
+#import <React/RCTUtils.h>
+#import <React/RCTUIManager.h>
+#import <React/RCTImageStoreManager.h>
 
 @implementation RCTGPUImageViewManager
 

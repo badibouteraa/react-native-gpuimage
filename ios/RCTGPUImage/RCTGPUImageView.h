@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RCTImageView.h"
 #import "GPUImage.h"
-#import "RCTComponent.h"
+#import <React/RCTComponent.h>
 
 @interface RCTGPUImageView : RCTImageView
 

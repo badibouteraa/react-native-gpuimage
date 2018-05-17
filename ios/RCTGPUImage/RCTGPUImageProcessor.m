@@ -7,11 +7,11 @@
 //
 
 #import "RCTGPUImageProcessor.h"
-#import "RCTConvert.h"
-#import "RCTImageLoader.h"
-#import "RCTLog.h"
-#import "RCTUtils.h"
-#import "RCTImageStoreManager.h"
+#import <React/RCTConvert.h>
+#import <React/RCTImageLoader.h>
+#import <React/RCTLog.h>
+#import <React/RCTUtils.h>
+#import <React/RCTImageStoreManager.h>
 #import "GPUImage.h"
 
 @implementation RCTGPUImageProcessor

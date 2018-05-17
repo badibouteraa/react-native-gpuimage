@@ -7,7 +7,7 @@
 //
 
 #import "RCTGPUImageView.h"
-#import "RCTImageSource.h"
+#import <React/RCTImageSource.h>
 
 @interface RCTGPUImageView() {
     BOOL _needReloadFilterGroup;
