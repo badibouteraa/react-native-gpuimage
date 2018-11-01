@@ -16,16 +16,7 @@ import {
 const GPUImageViewManager = NativeModules.GPUImageViewManager;
 
 class GPUImageView extends Component {
-  onCaptureDone = (ev) => {
-    const capturing = this.capturing;
-    this.capturing = null;
-    capturing && capturing.resolve(ev.nativeEvent);
-  };
-  onCaptureFailed = ev => {
-    const capturing = this.capturing;
-    this.capturing = null;
-    capturing && capturing.reject(new Error(ev.nativeEvent.message));
-  };
+
   render() {
     if (Platform.OS === 'ios') {
       return <RCTGPUImageView {...this.props} />;
@@ -50,8 +41,6 @@ class GPUImageView extends Component {
           shouldNotifyLoadEvents: !!(onLoadStart || onLoad || onLoadEnd),
           src: source.uri,
           loadingIndicatorSrc: loadingIndicatorSource ? loadingIndicatorSource.uri : null,
-          onCaptureDone: this.onCaptureDone,
-          onCaptureFailed: this.onCaptureFailed,
         };
         return <RCTGPUImageView {...nativeProps} />;
       }
@@ -61,25 +50,25 @@ class GPUImageView extends Component {
     }
   }
 
-  capture() {
+  componentDidUpdate(prevProps) {
+    if(this.props.master && (prevProps.filters[0].name !== this.props.filters[0].name)) {
+      this.capture();
+    }
+  }
+
+  async capture() {
     if (Platform.OS === 'ios'){
-      return GPUImageViewManager.capture(findNodeHandle(this));
+      await GPUImageViewManager.capture(findNodeHandle(this));
+    } else {
+      await UIManager.dispatchViewManagerCommand(findNodeHandle(this), 1, null);
     }
-    if (this.capturing) {
-      return Promise.reject('isCapturing');
-    }
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      UIManager.RCTGPUImageView.Commands.capture,
-      null
-    );
-    return new Promise((resolve, reject)=>{
-      this.capturing = {resolve, reject};
-    });
   }
 }
 
 GPUImageView.propTypes = {
+  onCaptureDone: PropTypes.func,
+  onCaptureFailed: PropTypes.func,
+  master: PropTypes.bool,
   filters: PropTypes.array,
   onGetSize : PropTypes.func,
   ...Image.propTypes,
@@ -108,4 +97,4 @@ if (Platform.OS === 'android') {
 var RCTGPUImageView = requireNativeComponent('RCTGPUImageView', GPUImageView, cfg)
 
 
-module.exports = GPUImageView;
+export default GPUImageView;

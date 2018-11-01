@@ -59,8 +59,8 @@ public class RCTGPUImageViewManager extends SimpleViewManager<RCTGPUImageView> {
             @Nullable ReadableArray args) {
         switch (commandType) {
             case COMMAND_CAPTURE: {
+                System.out.println("receiveCommand/**************/COMMAND_CAPTURE//"+commandType);
                 view.doCapture();
-                return;
             }
         }
     }
@@ -81,6 +81,7 @@ public class RCTGPUImageViewManager extends SimpleViewManager<RCTGPUImageView> {
     @Override
     public @Nullable Map getExportedCustomDirectEventTypeConstants() {
         return MapBuilder.of(
+                "topGetSize", MapBuilder.of("registrationName", "onGetSize"),
                 "topCaptureFailed", MapBuilder.of("registrationName", "onCaptureFailed"),
                 "topCaptureDone", MapBuilder.of("registrationName", "onCaptureDone")
         );
